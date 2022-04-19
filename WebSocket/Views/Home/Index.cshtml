@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class=" container">
+    <div class="row" id="user-info">
+        <div class="col-12">
+            <div class="form-group">
+                <label>Add username</label>
+                <input type="text" name="username" class="form-control" id="username" autocomplete="off" />
+                <button class="btn btn-outline-success m-3" id="join">Join</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="message-area" style="display:none">
+        <div class="col-12">
+            <div>Join as: <span id=" joiner">Nobody</span></div>
+            <hr />
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <ul class="list-group" id="message-list">
+                    <li class="list-group-item">test1</li>
+                    <li class="list-group-item">test1</li>
+
+                    <li class="list-group-item">test1</li>
+
+                    <li class="list-group-item">test1</li>
+
+                    <li class="list-group-item">test1</li>
+
+                </ul>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <input type="text" name="message" class="form-control" id="message" autocomplete="off" />
+                    <input type="button"class="btn btn-outline-primary mt-3"  value="Send message" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/js/microsoft/signalr/dist/browser/signalr.min.js"></script>
+
+<script>
+    let connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+    let username = "";
+    console.log(connection)
+    connection.start();
+
+   
+
+    document.getElementById("join").addEventListener("click", function () {
+        let userInputName = document.getElementById("username").value;
+        if (userInputName = "") {
+            alert("Please add username")
+            return;
+        }
+        username = userInputName;
+        document.getElementById("user-info").style.display = "none";
+        document.getElementById("message-area").style.display = "block";
+        document.getElementById("joiner").innerText = username;
+
+
+    })
+</script>
